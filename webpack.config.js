@@ -10,7 +10,15 @@ const SETTINGS = require('./settings');
 const production = process.env.NODE_ENV === 'production';
 
 const stylesLoaders = [
-  'css-loader',
+  // 'css-loader',
+  {
+    loader: 'css-loader',
+    options: {
+      localIdentName: "[name]__[local]___[hash:base64:5]",
+      modules: true,
+      // sourceMap: IS_DEV,
+    },
+  },
   'postcss-loader',
   'sass-loader',
   {
@@ -37,6 +45,11 @@ const loaders = [
     loader: production
       ? ExtractTextPlugin.extract({ fallback: 'style-loader', use: stylesLoaders })
       : ['style-loader', ...stylesLoaders],
+  },
+
+  {
+    test: /\.scss/,
+    loader: 'import-glob-loader',
   },
 
   {

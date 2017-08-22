@@ -1,19 +1,65 @@
-html {
-  box-sizing: border-box;
-  font-size: 62.5%;
-  -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
-}
+//html {
+//  box-sizing: border-box;
+//  //font-size: 62.5%;
+//  -webkit-font-smoothing: antialiased;
+//  -webkit-tap-highlight-color: transparent;
+//}
+//
+//*,
+//*::before,
+//*::after {
+//  box-sizing: inherit;
+//}
+//
+//body {
+//  font-size: 1.6em;
+//  line-height: 1.6;
+//  color: $color-black;
+//  font-family: sans-serif;
+//}
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
+// ========================================================
+//
+// Application styles
+//
+// ========================================================
 
-body {
-  font-size: 1.6em;
-  line-height: 1.6;
-  color: $color-black;
-  font-family: sans-serif;
-}
+
+// Helpers (кроме include-media)
+@import './helpers/_mixins.scss';
+
+// Functions
+@import './functions/**/*.scss';
+
+//// Config
+//@import 'config/**/*.scss';
+
+
+// Bootstrap grid system v4.1
+@import './vendors/bootstrap/main.scss';
+
+// Helpers (include-media)
+@import './helpers/_include-media.scss';
+
+
+// Base HTML element resets and styling
+// @import 'base/**/*.scss';
+// @import 'base/text';
+// @import 'base/forms';
+// @import 'base/grouping';
+// @import 'base/links';
+// @import 'base/sections';
+// @import 'base/tables';
+// @import 'base/embedded';
+// @import 'base/disabled';
+
+
+// Vendors
+
+
+
+// Components
+
+
+// Themes
+// @import 'themes/**/*.scss';

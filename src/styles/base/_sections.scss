@@ -1,0 +1,130 @@
+// =========================================================
+// Sections
+// w3c.github.io/html/sections.html
+// =========================================================
+
+// 1. Prevent adjustment of font size on orientation change.
+html {
+  box-sizing: border-box;
+  height: 100%;
+  text-size-adjust: 100%; // 1
+  position: relative;
+
+  @include rem-baseline; // font-size: 10px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+@media print {
+  @page {
+    margin: 2cm;
+  }
+
+  * {
+    background: none !important;
+    color: black !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+}
+
+body {
+  font-family: $base-font;
+  margin: 0;
+  height: 100%;
+  background-color: white;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  color: $color-text;
+
+  $base-font-size: $size-xs;
+  font-size: $base-font-size;
+  @include media(">=sm") {
+      font-size: $size-sm;
+  };
+  @include media(">=md") {
+    font-size: $size-md;
+  };
+  @include media(">=lg") {
+    font-size: $size-lg;
+  };
+
+}
+
+// Add the correct display in IE 9-.
+article,
+aside,
+footer,
+header,
+main,
+nav,
+section {
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  font-size: inherit;
+  font-weight: inherit;
+
+  @media print {
+    page-break-after: avoid;
+  }
+}
+
+// 1. Add the correct box sizing in Firefox.
+// 2. Show the overflow in Edge and IE.
+hr {
+  box-sizing: content-box; // 1
+  height: 0; // 1
+  overflow: visible; // 2
+  border: 0;
+}
+.clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+
+.section {
+  &__title {
+    color: $white;
+    text-shadow: 0 0 24px rgba(255, 255, 255, 0.35), 0 0 24px rgba(255, 255, 255, 0.35);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 4em;
+    line-height: 1.25;
+    margin-bottom: em-rel(3, 4);
+    @include media("<sm"){
+      font-size: 3em;
+    };
+  }
+  &__subtitle {
+    color: #595858;
+    font-size: 1.5rem;
+    line-height: (2/1.5);
+    text-transform: uppercase;
+  }
+
+}
+
+p, .pf {
+  font-size: 1.6em;
+  line-height: 1.25;
+  margin-bottom: em-rel(2, 1.6);
+  &:only-of-type, &:last-child {
+      margin-bottom: 0;
+  }
+}

@@ -17,7 +17,8 @@ module.exports = {
       "imports": "always-multiline",
       "exports": "always-multiline",
       "functions": "ignore",
-    }]
+    }],
+    "linebreak-style": ["error", "windows"],
   },
 
   "settings": {
