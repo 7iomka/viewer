@@ -10,16 +10,41 @@ const SETTINGS = require('./settings');
 const production = process.env.NODE_ENV === 'production';
 
 const stylesLoaders = [
-  // 'css-loader',
+  'import-glob-loader',
   {
     loader: 'css-loader',
     options: {
-      localIdentName: "[name]__[local]___[hash:base64:5]",
+      localIdentName: '[name]__[local]___[hash:base64:5]',
+      sourceMap: !production,
       modules: true,
-      // sourceMap: IS_DEV,
+      // importLoaders: true,
     },
   },
   'postcss-loader',
+  'sass-loader',
+  {
+    loader: 'sass-resources-loader',
+    options: {
+      resources: [
+        './src/styles/variables.scss',
+        './src/styles/mixins.scss',
+      ],
+    },
+  },
+];
+
+const globalStyleLoaders = [
+  'import-glob-loader',
+  // 'css-loader?sourceMap&importLoaders=1',
+  {
+    loader: 'css-loader',
+    options: {
+      sourceMap: !production,
+      // importLoaders: true,
+    },
+  },
+  'postcss-loader',
+  'import-glob-loader',
   'sass-loader',
   {
     loader: 'sass-resources-loader',
@@ -39,19 +64,22 @@ const loaders = [
     include: path.join(__dirname, 'src'),
     exclude: /node_modules/,
   },
-
   {
-    test: /\.(css|scss)$/,
+    test: /\.global\.(css|scss)$/, // only files with .global will go through this loader. e.g. app.global.css
+    loader: production
+      ? ExtractTextPlugin.extract({ fallback: 'style-loader', use: globalStyleLoaders })
+      : ['style-loader', ...globalStyleLoaders],
+  },
+  {
+    test: /^((?!\.global).)*\.(css|scss)$/, // anything with .global will not go through css modules loader
     loader: production
       ? ExtractTextPlugin.extract({ fallback: 'style-loader', use: stylesLoaders })
       : ['style-loader', ...stylesLoaders],
   },
-
-  {
-    test: /\.scss/,
-    loader: 'import-glob-loader',
-  },
-
+  // {
+  //   test: /\.scss/,
+  //   loader: 'import-glob-loader',
+  // },
   {
     test: /\.(svg|png|jpg|gif|woff|woff2|otf|ttf|eot)$/,
     loader: 'file-loader',

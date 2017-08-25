@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Container, Button, Header } from 'semantic-ui-react';
+import {
+  Grid,
+  Container,
+  Button,
+  Header,
+  Loader,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { onGetProducts } from 'actions/productActions';
@@ -9,27 +15,39 @@ import styles from './HomePage.scss';
 
 class HomePage extends Component {
   componentDidMount() {
-    this.props.getProducts();
+    if (!this.props.products.length) {
+      this.props.getProducts();
+    }
   }
   // componentWillReceiveProps(nextProps) {
   //   this.renderProducts()
   // }
   renderProducts() {
-    if (this.props.products.length) {
-      return this.props.products.map(product => {
-        const { ...productProps } = product;
-        return (
-          <Grid.Column key={`${product.id}-column`}>
-            <Product {...productProps} />
-          </Grid.Column>
-        );
-      });
+    if (this.props.products) {
+      if (this.props.products.length) {
+        return this.props.products.map(product => {
+          const { ...productProps } = product;
+          return (
+            <Grid.Column key={`${product.id}-column`}>
+              <Product {...productProps} />
+            </Grid.Column>
+          );
+        });
+      }
+      // return <Header textAlign="center" color="red">Server error with loading products!</Header>;
     }
     return (
-      <div className={styles.noProducts}>Products preloading ... Please wait!</div>
+      <Loader
+        style={{
+          marginTop: 20,
+          marginBottom: 20,
+        }}
+        active
+        inline="centered"
+        size="large"
+      >Products loading ... Please wait!</Loader>
     );
   }
-
   render() {
     return (
       <div className="root">
@@ -48,7 +66,7 @@ class HomePage extends Component {
         <div className={styles.products}>
           <Header as="h2" size="huge" className={styles.title} textAlign="center">Trending Products</Header>
           <Container className={styles.productsContainer}>
-            <Grid columns={3} >
+            <Grid columns={3} centered>
               { this.renderProducts() }
             </Grid>
           </Container>
